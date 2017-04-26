@@ -1,0 +1,45 @@
+#include <iostream>
+#include <math.h>
+#include <string>
+#include<vector>
+using namespace std;
+
+void swap(int*a,int*b){
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+
+int main(int argc, char** argv)
+{
+    string a,c;
+    getline(cin,a);
+    getline(cin,c);
+    int count=0;
+    int b=0;
+    int i=c.length()-1;
+    while(i>=0){
+        b+=(c[i]-48)*pow(10,count);
+        count++;
+        i--;
+    }
+    i=a.length()-1;
+    int sum=0;
+    vector<int>x;
+    while(i>=0){
+        sum=0;
+        count=0;
+        while(i>=0 && a[i]!=' '){
+            sum+=(a[i]-48)*pow(10,count);
+            count++;
+            i--;
+        } 
+        x.push_back(sum);
+        i--;
+    }
+    swap(&x[b-1],&x[x.size()-b]);
+    for(int i=x.size()-1;i>=0;i--){
+        cout<<x[i]<<" ";
+    }
+    return 0;
+}
