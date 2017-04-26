@@ -1,0 +1,41 @@
+#include <iostream>
+#include <map>
+#include <string>
+#include <utility>
+
+using namespace std;
+
+int main(int argc, char** argv)
+{   
+    int n;
+    cin>>n;
+    string a,b;
+    multimap<string,string> ma;
+    multimap<string,string>::iterator pos,it;
+    pos = ma.begin();
+    int count=0;
+    string temp;
+    for(int i=0;i<n;i++){
+        cin>>temp;
+        a=temp.substr(0,temp.find(','));
+        b=temp.substr(temp.find(',')+1);
+        pos=ma.insert(pair<string,string>(b,a));
+        pos++;
+    }
+    cin>>a;
+    it=ma.begin();
+    pos=ma.begin();
+    while(pos!=ma.end()){
+        if(pos->first==a){
+            it=ma.begin();
+            while(it!=ma.end()){
+                if(it->first==pos->second){
+                    count++;
+                }
+                it++;
+            }
+        }
+        pos++;
+    }
+    cout<<count;
+}
