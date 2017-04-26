@@ -23,7 +23,7 @@ int main(int argc, char** argv)
         count++;
         i--;
     }
-    i=a.length()-1;
+    i=a.length()-1; // change it to length - 2 for skillrack compiler coz apparently it is including the new line char too into the string 
     int sum=0;
     vector<int>x;
     while(i>=0){
