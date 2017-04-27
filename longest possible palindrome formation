@@ -37,7 +37,7 @@ int main(int argc, char** argv)
 {
     int no_of_strings;
     cin>>no_of_strings;
-    string list[no_of_strings];
+    string list[no_of_strings];// string array not needed. Just one temp string is enough. Coz we just need the count
     int counter[76]={};
     char alphabets[76]={};
     for(int i=0;i<76;i++){
