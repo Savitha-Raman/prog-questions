@@ -1,0 +1,75 @@
+#include <iostream>
+#include<string> 
+#include<algorithm>
+using namespace std;
+/*void swap(int *a, int *b){
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+void swap(char*a,char*b){
+    char temp=*a;
+    *a=*b;
+    *b=temp;
+}
+void bubble(int a[],char b[]){
+    for(int i=0;i<76;i++){
+        bool xyz=false;
+        for(int j=0;j<75;j++){
+            if(a[j]<a[j+1]){
+                swap(&a[j],&a[j+1]);
+                swap(&b[j],&b[j+1]);
+                xyz=true;
+            }
+            else if(b[j+1]<b[j] && b[j+1]<96){ //&& a[j]!=0 && a[j+1]!=0 ){
+                swap(&a[j],&a[j+1]);
+                swap(&b[j],&b[j+1]);
+                xyz=true;
+            } 
+        }
+        if(xyz==false){
+            break;
+        }
+    }
+}
+*/
+int main(int argc, char** argv)
+{
+    int no_of_strings;
+    cin>>no_of_strings;
+    string list[no_of_strings];
+    int counter[76]={};
+    char alphabets[76]={};
+    for(int i=0;i<76;i++){
+        alphabets[i]=(char)(i+48);
+    }
+    for(int i=0;i<no_of_strings;i++){
+        cin>>list[i];
+        for(int j=0;j<list[i].length();j++){
+            counter[list[i][j]-48]++;
+        }
+    }
+    //bubble(counter,alphabets); // Wasted tons of time writing the correct sorting algo only to find out that it is not needed -_-
+    string final;
+    char only_one='-';
+    bool done=false;
+    for(int i=0;i<76;i++){
+        if(counter[i]==0){
+            continue;
+        }
+        if(counter[i]%2==1 && done==false){
+            only_one=alphabets[i];
+            done=true;
+            final.append(counter[i]/2,alphabets[i]);
+        }
+        if(counter[i]/2>0 || counter[i]%2==0){
+                final.append(counter[i]/2,alphabets[i]);
+        }
+    }
+    if(only_one!='-') final.append(1,only_one);
+    string temp=final;
+    reverse(temp.begin(),temp.end());
+    temp.erase(0,1);
+    cout<<final<<temp;
+    return 1;
+}
