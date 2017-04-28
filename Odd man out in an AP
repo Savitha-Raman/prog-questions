@@ -1,0 +1,61 @@
+#include <iostream>
+#include<stdlib.h>
+#include<string>
+#include<vector>
+using namespace std;
+
+int compare(const void *a,const void*b) return (*(int*)a-*(int*)b);
+
+int main()
+{
+    string a;
+    getline(cin,a);
+    int i=a.length()-1;
+    int sum=0;
+    int t=1;
+    vector<int>final;
+    while(i>=0){
+        sum=0;
+        t=1;
+        while(i>=0 && a[i]!=' '){
+            sum = sum+(a[i]-'0')*t;
+            t=t*10;
+            i--;
+        }
+        final.push_back(sum);
+        i--;
+    }
+    qsort(&final[0],final.size(),sizeof(int),compare);
+    i=2;
+    int temp_diff;
+    int orig_diff=abs(final[1]-final[0]); // Just a blind cconsideration
+    short abc=0;
+    while(abc!=1){
+        temp_diff=abs(final[i]-final[i-1]);
+        if(temp_diff==orig_diff){
+            abc++;
+        }
+        else{
+            orig_diff=temp_diff;
+            abc=0;
+        }
+        i++;
+    }
+    i=2;
+    if(final[1]-final[0] != orig_diff && final[2]-final[1]==orig_diff){
+            cout<<final[0];
+            return 1;
+    }
+    while(i<final.size()){
+        temp_diff=abs(final[i]-final[i-1]);
+        if(temp_diff!=orig_diff){
+            cout<<final[i];
+            break;
+        }
+        i++;
+        if(i==final.size()){
+            cout<<"-1";
+        }
+    }
+    return 100;
+}
