@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(int argc, char** argv)
+{
+    int x=0,y=0;
+    string cmd;
+    cin>>x>>y;
+    getchar();getchar(); // cin.ignore() will work just fine in any other compiler except for the skillrack compiler 
+    getline(cin,cmd);
+    int temp=0;
+    int pos=1;
+    for(int i=cmd.length()-1;i>=0;i--){
+        pos=1;
+        temp=0;
+        while(i>=1&&cmd[i]!='E'&&cmd[i]!='W'&&cmd[i]!='S'&&cmd[i]!='W'&&cmd[i]!='-'&&cmd[i]!=' '){
+            temp = temp + (cmd[i]-'0')*pos;
+            pos=pos*10;
+            i--;
+        }
+        if(cmd[i]==' '){
+            i--;
+        }
+        else if(cmd[i]=='-'){
+            temp*=-1;
+        }
+        else if(cmd[i]=='E'){
+            x=x+temp;
+        }
+        else if(cmd[i]=='W'){
+            x=x-temp;
+        }
+        else if(cmd[i]=='N'){
+            y=y+temp;
+        }
+        else if(cmd[i]=='S'){
+            y=y-temp;
+        }
+        i--;
+    }
+    cout<<x<<" "<<y;
+    return 1;
+}
