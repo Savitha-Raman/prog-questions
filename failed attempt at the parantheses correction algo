@@ -1,3 +1,137 @@
+//ACTUAL SOLUTION
+#include <stdio.h>
+#include <string.h>
+ 
+int isParentheses(char ch)
+{
+    if(ch == '(' || ch == ')')
+        return 1;
+ 
+    return 0;
+}
+ 
+struct Parantheses
+{
+    char ptype;  //o for open and c for close parentheses
+    int positionIndex;
+    int matched;
+    int prevUnMatchedCount; //Used only for (
+    int nextUnMatchedCount; //Used only for )
+};
+ 
+ 
+int main()
+{
+    char input[100];
+    scanf("%s",input);
+    int LEN = strlen(input); //Length of the string
+ 
+    int TOTALPARANTHESESCOUNT=0;
+    int CLOSEPARANTHESESCOUNT=0;
+    int index;
+ 
+    for(index = 0; index < LEN; index++)
+    {
+        if(isParentheses(input[index]))
+        {
+            if(input[index] == ')')
+            {
+                CLOSEPARANTHESESCOUNT++;
+            }
+            TOTALPARANTHESESCOUNT++;
+        }
+    }
+ 
+    struct Parantheses paranthesesList[TOTALPARANTHESESCOUNT];
+    int paranthesesCount=0;
+    int unMatchedOpenParanthesesCount=0;
+    int unMatchedCloseParanthesesCount=CLOSEPARANTHESESCOUNT;
+ 
+    for(index = 0; index < LEN; index++)
+    {
+        if(isParentheses(input[index]))
+        {
+            if(input[index] == '(')
+            {
+                unMatchedOpenParanthesesCount++;
+                paranthesesList[paranthesesCount].ptype='o';
+                paranthesesList[paranthesesCount].positionIndex=index;
+                paranthesesList[paranthesesCount].matched=0;
+                paranthesesList[paranthesesCount].prevUnMatchedCount = unMatchedOpenParanthesesCount-1;
+ 
+            }
+            else
+            {
+                unMatchedCloseParanthesesCount--;
+                paranthesesList[paranthesesCount].ptype='c';
+                paranthesesList[paranthesesCount].positionIndex=index;
+                paranthesesList[paranthesesCount].matched=0;
+                paranthesesList[paranthesesCount].nextUnMatchedCount = unMatchedCloseParanthesesCount;
+ 
+                if(unMatchedOpenParanthesesCount > 0)
+                {
+                    unMatchedOpenParanthesesCount--;
+                }
+            }
+ 
+            paranthesesCount++;
+        }
+    }
+ 
+    //Process Matching
+    for(paranthesesCount = 0; paranthesesCount < TOTALPARANTHESESCOUNT; paranthesesCount++)
+    {
+        if(paranthesesList[paranthesesCount].ptype == 'c')
+        {
+            int prevParanthesesIndex = paranthesesCount-1;
+            while(prevParanthesesIndex >= 0)
+            {
+                if(paranthesesList[prevParanthesesIndex].ptype == 'o' && paranthesesList[prevParanthesesIndex].matched == 0)
+                {
+                    //Check if subsequent parantheses and sufficient present further to match
+                    if(input[paranthesesList[prevParanthesesIndex].positionIndex+1] == '(' &&
+                            paranthesesList[paranthesesCount].nextUnMatchedCount < paranthesesList[prevParanthesesIndex].prevUnMatchedCount)
+                    {
+                        //Do nothing .. Search for previous open bracket
+ 
+                    }
+                    else
+                    {
+                        paranthesesList[prevParanthesesIndex].matched=1;
+                        paranthesesList[paranthesesCount].matched=1;
+                        break;
+                    }
+                }
+ 
+                prevParanthesesIndex--;
+            }
+        }
+    }
+ 
+ 
+    //Print the output
+    paranthesesCount=0;
+    for(index = 0; index < LEN; index++)
+    {
+        if(isParentheses(input[index]))
+        {
+            if(paranthesesList[paranthesesCount].matched == 1)
+            {
+                printf("%c",input[index]);
+            }
+            paranthesesCount++;
+        }
+        else
+        {
+            printf("%c",input[index]);
+        }
+ 
+    }
+ 
+    return 0;
+}
+
+//MY ATTEMPT
 #include <iostream>
 #include <vector>
 using namespace std;
