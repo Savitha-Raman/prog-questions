@@ -1,0 +1,39 @@
+#include <iostream>
+#include<cmath>
+using namespace std;
+
+int main() {
+    int r,c;
+    cin>>r>>c;
+    int arr[r][c];
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            cin>>arr[i][j];       
+        }
+    }
+    int maxx[r][c];
+    for(int i=0; i<r;i++){
+        for(int j=0; j<c;j++){
+            if(i==0 && j==0){
+                maxx[i][j] = arr[i][j];
+            }
+            else if(i==0){
+                maxx[i][j] = maxx[i][j-1] + arr[i][j];  // top row rightward
+            }
+            else if(j==0){
+                maxx[i][j] = maxx[i-1][j] + arr[i][j]; // first col downward
+            }
+            else{                                                                            //     a 
+                maxx[i][j] = max(maxx[i][j-1], maxx[i-1][j]) + arr[i][j];                    //   b x -> x + max(a,b)
+            }
+        }
+    }
+    /*for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            cout<<max[i][j]<<" ";       
+        }
+        cout<<endl;
+    }*/
+    cout<<maxx[r-1][c-1];
+    return 0;
+}
