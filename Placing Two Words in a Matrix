@@ -1,0 +1,172 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int x,temp=0;
+	cin>>x;
+	char a[x][x];
+	int r1=-1,c1=-1;
+	int r2=-1,c2=-1;
+	int len1=1,len2=1;
+	int gate1=0;
+	int pos1=0; // for fixing positions of two strings(starting points)
+	string str1,str2;
+	for(int i=0;i<x;i++){
+	   for(int j=0;j<x;j++){
+	       cin>>a[i][j];
+	   }
+	}
+	cin>>str1>>str2;
+		
+	for(int i=0;i<x;i++){
+	   for(int j=0;j<x-1;j++){//Only till x-1 coz we're checking one step forward. So if we move till the last then we start checking the next row.(Coz array stored as 1D only in memory)
+	       if(gate1==0 && a[i][j]==a[i][j+1] && a[i][j]=='*'){
+	           if(pos1==0){
+	               r1=i;
+    	           c1=j;
+    	           pos1=1;
+	           }
+	           len1++;
+	           if(a[i][j+2]=='+' || j==x-2){ //+2 coz we're chexking j+1 to enter the 'if'//means that the *s have reached the end or the matrix line is ending
+	               gate1=1;                  
+	               continue;
+	           }
+	       }
+	       if(gate1==1 && a[i][j+1]==a[i][j] && a[i][j]=='*'){
+	           if(pos1==1){
+	               r2=i;
+    	           c2=j;
+    	           pos1=2;
+	           }
+	           len2++;
+	       }
+	   }
+	}
+	if(r1!=-1 && r2!=-1){
+	   if(len1==str1.length()){
+	       temp=0;
+	       for(int i=c1;i<c1+str1.length();i++,temp++){
+	           a[r1][i]=str1[temp];
+	       }
+	       temp=0;
+	       for(int i=c2;i<c2+str2.length();i++,temp++){
+	           a[r2][i]=str2[temp];
+	       }
+	   }
+	   else{
+	       temp=0;
+	       for(int i=c1;i<c1+str2.length();i++,temp++){
+	           a[r1][i]=str2[temp];
+	       }
+	       temp=0;
+	       for(int i=c2;i<c2+str1.length();i++,temp++){
+	           a[r2][i]=str1[temp];
+	       }
+	   }
+	   goto end;
+	}
+	if(r1==-1){//both '*' lines are vertical
+	   //cout<<"Two verticals"<<endl;
+	   for(int i=0;i<x;i++){
+	       for(int j=0;j<x-1;j++){
+                if(gate1==0 && a[j][i]==a[j+1][i] && a[j][i]=='*'){
+    	           if(pos1==0){
+    	               r1=j;
+        	           c1=i;
+        	           pos1=1;
+    	           }
+    	           len1++;
+    	           if(a[j+2][i]=='+' || j==x-2){ //means that the *s have reached the end or matrix line end
+    	               gate1=1;
+    	               continue;
+    	           }
+                }
+                if(gate1==1 && a[j+1][i]==a[j][i] && a[j][i]=='*'){
+                    if(pos1==1){
+                        r2=j;
+        	           c2=i;
+        	           pos1=2;
+                    }
+                    len2++;
+                }
+	       }
+	   }
+	}
+	if(r1!=-1 && r2!=-1){
+	   if(len1==str1.length()){
+	       temp=0;
+	       for(int i=r1;i<r1+str1.length();i++,temp++){
+	           a[i][c1]=str1[temp];
+	       }
+	       temp=0;
+	       for(int i=r2;i<r2+str2.length();i++,temp++){
+	           a[i][c2]=str2[temp];
+	       }
+	   }
+	   else{
+	       temp=0;
+	       for(int i=r1;i<r1+str2.length();i++,temp++){
+	           a[i][c1]=str2[temp];
+	       }
+	       temp=0;
+	       for(int i=r2;i<r2+str1.length();i++,temp++){
+	           a[i][c2]=str1[temp];
+	       }
+	   }
+	   goto end;
+	}
+	else if(r2==-1){ //only one * line vertical
+	   //cout<<"One vertical"<<endl;
+	   for(int i=0;i<x;i++){
+	       for(int j=0;j<x-1;j++){
+                if(gate1==1 && a[j+1][i]==a[j][i] && a[j][i]=='*'){
+                    if(pos1==1){
+                        r2=j;
+        	           c2=i;
+        	           pos1=2;
+                    }
+                    len2++;
+                }
+	       }
+	   }
+	   //cout<<r1<<' '<<c1<<endl;
+       //cout<<r2<<' '<<c2<<endl;
+    	if(r1!=-1 && r2!=-1){
+    	   if(len1==str1.length() && len2!=str2.length()){
+    	X:     temp=0;
+    	       for(int i=c1;i<c1+str1.length();i++,temp++){
+    	           a[r1][i]=str1[temp];
+    	       }
+    	       temp=0;
+    	       for(int i=r2;i<r2+str2.length();i++,temp++){
+    	           a[i][c2]=str2[temp];
+    	       }
+    	       goto end;
+    	   }
+    	   else if(len2==str2.length() && len1!=str1.length()){
+    	Y:     temp=0;
+    	       for(int i=c1;i<c1+str2.length();i++,temp++){
+    	           a[r1][i]=str2[temp];
+    	       }
+    	       temp=0;
+    	       for(int i=r2;i<r2+str1.length();i++,temp++){
+    	           a[i][c2]=str1[temp];
+    	       }
+    	       goto end;
+    	   }
+    	   else{
+    	       if(str1[c2-c1]==str2[r1-r2]) goto X; // checking the common term. Uska aur iska same jagah ek hi aara ki nai dekh rahe
+    	       else goto Y;
+    	   }
+    	}
+	}
+	//cout<<r1<<" "<<c1<<"           "<<len1<<endl;
+	//cout<<r2<<" "<<c2<<"           "<<len2<<endl;
+end:
+    for(int i=0;i<x;i++){
+	   for(int j=0;j<x;j++){
+	       cout<<a[i][j];
+	   }
+	   cout<<endl;
+	}
+	return 0;
+}
