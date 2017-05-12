@@ -1,0 +1,51 @@
+// Thought of doing it with strings. It would be a lot easier if the numbers had the same no. of digits
+// coz the starting position wouldnt have varied going from row to row (coz the second row could have the same substring but at a
+// displaced location)
+
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(){
+    int n,m;
+    cin>>n>>m;
+    bool fl=false;
+    int big[n][n],small[m][m];
+    for(int i=0;i<n;i++){    
+        for(int j=0;j<n;j++){
+            cin>>big[i][j];
+        }
+    }
+    for(int i=0;i<m;i++){    
+        for(int j=0;j<m;j++){
+            cin>>small[i][j];
+        }
+    }
+    int x=0,y=0;
+    for(int i=0;i<=n-m;i++){    
+        for(int j=0;j<=n-m;j++){
+            x=0;y=0;
+            if(big[i][j]==small[x][y]){
+                for(int a=i;a<i+m;a++,x++){
+                    for(int b=j,y=0;b<j+m;b++,y++){
+                        cout<<a<<x<<" "<<b<<y<<endl;
+                        if(big[a][b]==small[x][y]){
+                            fl=true;
+                            if(x==m-1 && y==m-1){
+                                cout<<"TRUE";
+                                return 7;
+                            }
+                            else continue;
+                        }
+                        else if(big[a][b]!=small[x][y]){
+                            fl=false;
+                            break;
+                        }
+                    }
+                    if(fl==false) break;
+                }
+            }
+        }
+    }
+    cout<<"FALSE";
+    return 7;
+}
