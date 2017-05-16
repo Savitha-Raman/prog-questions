@@ -5,8 +5,8 @@
 int main() {
     std::string base;
 	std::cin>>base;
-	int t=base.length()/2;
-	int i=0;
+	int t=base.length()/2; // first I had kept it as one and went increasing the size. But then had cases like 765764763, then going 
+	int i=0;	       // considers it as the series 7 6 5.....
 	bool diff=false;
 	int temp1=0,temp2=0;
 	while(true){
@@ -54,40 +54,6 @@ int main() {
     	       continue; 
     	    }
     	    else break;
-                            /*
-                            char buf[15];
-                            int i;
-                            bool present;
-                            while(true){
-                               i=0;
-                               long _temp = temp1 - 2;
-                               while(_temp>0){
-                                   buf[i]=_temp%10+'0';
-                                   i++;
-                               }
-                               for(int j=0;j<i/2;j++){
-                                   buf[j] ^= buf[i-1-j];
-                                   buf[i-1-j] ^= buf[j];
-                                   buf[j] ^= buf[i-1-j];
-                               }
-                               for(int x=0 ; x < base.length()-i; x++){
-                                   int z=0;int y;
-                                   for(y=x ; y < x+i ; y++,z++){
-                                       if(base[y]==buf[z]) continue;
-                                   }
-                                   if(x==base.length()-i-1){
-                                       present=false;
-                                   }
-                                   else if(y==x+i-1){
-                                        present=true;
-                                        break;
-                                   }
-                               }
-                               if(present==false) break;
-                               else continue;
-                            }
-                            std::cout<<buf;
-                            */
 	    }
 	    std::cout<<buf;
 	}
