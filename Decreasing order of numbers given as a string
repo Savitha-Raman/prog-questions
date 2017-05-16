@@ -1,0 +1,95 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+
+int main() {
+    std::string base;
+	std::cin>>base;
+	int t=base.length()/2;
+	int i=0;
+	bool diff=false;
+	int temp1=0,temp2=0;
+	while(true){
+	    temp1=0,temp2=0;
+	    while(i<t){
+	        temp1*=10;
+	        temp1 += base[i]-'0';
+	        i++;
+	    }
+	    if(base[i]=='0'){
+	        t--;
+	        i=0;
+	        continue;
+	    }
+	    while(i<2*t){
+	        temp2*=10;
+	        temp2 += base[i]-'0';
+	        if(temp1-temp2==2 || temp1-temp2==1) break;
+	        i++;
+	    }
+	    if(temp2!=0 && temp1-temp2==1){
+	        diff=true;
+	        break;
+	    }
+	    else if(temp2!=0 && temp1-temp2==2){
+	        diff=false;
+	        break;
+	    }
+	    else{
+	        t--;
+	        i=0;
+	    }
+	}
+	if(diff==false){
+	    std::cout<<temp1-1;    
+	}
+	else{
+	    std::string buf;
+	    while(true){
+    	    std::stringstream conv; // also sprintf can be used 
+    	    conv << temp1-2;
+    	    buf = conv.str();
+    	    if(base.find(buf)<base.length()){
+    	       temp1--;
+    	       continue; 
+    	    }
+    	    else break;
+                            /*
+                            char buf[15];
+                            int i;
+                            bool present;
+                            while(true){
+                               i=0;
+                               long _temp = temp1 - 2;
+                               while(_temp>0){
+                                   buf[i]=_temp%10+'0';
+                                   i++;
+                               }
+                               for(int j=0;j<i/2;j++){
+                                   buf[j] ^= buf[i-1-j];
+                                   buf[i-1-j] ^= buf[j];
+                                   buf[j] ^= buf[i-1-j];
+                               }
+                               for(int x=0 ; x < base.length()-i; x++){
+                                   int z=0;int y;
+                                   for(y=x ; y < x+i ; y++,z++){
+                                       if(base[y]==buf[z]) continue;
+                                   }
+                                   if(x==base.length()-i-1){
+                                       present=false;
+                                   }
+                                   else if(y==x+i-1){
+                                        present=true;
+                                        break;
+                                   }
+                               }
+                               if(present==false) break;
+                               else continue;
+                            }
+                            std::cout<<buf;
+                            */
+	    }
+	    std::cout<<buf;
+	}
+	return 7;
+}
