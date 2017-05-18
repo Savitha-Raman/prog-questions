@@ -16,11 +16,13 @@ int main() {
 	        temp1 += base[i]-'0';
 	        i++;
 	    }
-	    if(base[i]=='0'){
-	        t--;
-	        i=0;
-	        continue;
-	    }
+	    /*
+			    if(base[i]=='0'){      //This aint needed while t is going from base.length()/2 to 0.
+				t--;
+				i=0;
+				continue;
+			    }
+	    */
 	    while(i<2*t){
 	        temp2*=10;
 	        temp2 += base[i]-'0';
