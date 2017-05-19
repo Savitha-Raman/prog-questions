@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+ 
+int main() {
+    std::vector<int>nums(1000);
+    int size=0;
+    char temp=0;
+    while(true){
+        scanf("%d%c",&nums[size++],&temp);
+        if(temp=='\n') break;
+    }
+    std::sort(nums.begin(),nums.begin()+size);
+    bool yes=false;
+    for(int i=0;i<size-2;i++){            // First I had done j=i+1 and k=j+1 but that caused repetitions of combinations 
+        if(nums[i]==nums[i+1]) continue;  // Same number may lead to same cobination
+        for(int j=i;j<size-1;j++){
+            if(nums[i]==nums[j] && nums[i]==0) continue; // To skip 0 0 0 case
+            for(int k=j;k<size;k++){
+                if(nums[i]+nums[j]+nums[k]==0){
+                    std::cout<<nums[i]<<' '<<nums[j]<<' '<<nums[k]<<std::endl;
+                    yes=true;
+                }
+            }  
+        }
+    }
+    if(yes==false) std::cout<<"None";
+    return 7;
+}
