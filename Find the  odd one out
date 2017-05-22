@@ -1,0 +1,29 @@
+#include <iostream>
+#include <map>
+#include <utility>
+using namespace std;
+
+int main() {
+    map<long,short> count;
+    map<long,long> pos;
+    long n;
+    long temp;
+    long long x=0;
+    cin>>n;
+    for(long i=0;i<=2*n;i++){
+        cin>>temp;
+        map<long,short>::iterator it = count.find(temp);
+        if(it==count.end()){
+           count.insert(pair<long,short>(temp,1));
+           pos.insert(pair<long,long>(temp,x));
+           x++;
+        }
+        else{
+            count.erase(temp);
+            x++;
+        }
+    }
+    map<long,short>::iterator it = count.begin();
+    map<long,long>::iterator mew = pos.find(it->first);
+    cout<<mew->second + 1;
+}
