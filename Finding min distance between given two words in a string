@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cmath>
+using namespace std;
+
+int main() {
+    string str,str_a,str_b;
+    vector <string> a;
+    getline(cin,str);
+    bool abcd=false;
+    
+    int i=0;
+    while(i<str.length()){
+        string temp;
+        while(str[i]!=' ' && i<str.length()){
+            temp+=str[i];
+            i++;
+        }
+        i++;
+        a.push_back(temp);
+    }
+    int min=1000;
+    cin>>str_a>>str_b;
+    abcd=false;
+    int pos_a=-110 , pos_b=str.length()-1;
+        for(int i=0;i<a.size();i++){
+            abcd=false;
+            if(a[i].length()==str_a.length()){
+                int j=0;
+                for(;j<a[i].length();j++){
+                    if(str_a[j]!=a[i][j]) break;
+                    if(j==a[i].length()-1){
+                        pos_a=i;
+                        abcd=true;
+                        break;
+                    }
+                }
+            }
+            //if(i==a.size()-1) break;
+            else if(abcd==true && i<a.size()-1) i++;   // if a[i] has been fully checked & accepted in the first loop already
+            if(a[i].length()==str_b.length()){
+                int j=0;
+                for(;j<a[i].length();j++){
+                    if(str_b[j]!=a[i][j]) break;
+                    if(j==a[i].length()-1){
+                        pos_b=i;
+                    }
+                }
+            }
+            //cout<<pos_a<<" "<<pos_b<<endl;
+            if(abs(pos_b-pos_a)<min){
+                min = abs(pos_b-pos_a);
+        }
+    }
+    cout<<min;
+	return 0;
+}
