@@ -37,7 +37,7 @@ int main() {
                     }
                 }
             }
-            //if(i==a.size()-1) break;
+            if(i==a.size()-1) break;
             else if(abcd==true && i<a.size()-1) i++;   // if a[i] has been fully checked & accepted in the first loop already
             if(a[i].length()==str_b.length()){
                 int j=0;
