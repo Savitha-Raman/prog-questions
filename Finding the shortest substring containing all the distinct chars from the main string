@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	bool chars[52]={};
+	bool chars_copy[52];
+	string base;
+	cin>>base;
+	short j;
+	short actual_size = 0,actual_size_temp;
+	short min_size = base.length();
+	for(short i=0 ; i<base.length() ; i++){
+	    if(base[i]>='a' && base[i]<='z'){
+	        if(chars[base[i]-'a'] == false) actual_size++;
+	        chars[base[i]-'a']=true;
+	    }
+	    else{
+	        if(chars[base[i]-'A'+26] == false) actual_size++;
+	        chars[base[i]-'A'+26]=true;
+	    }
+	}
+	for(short i=0 ; i<( base.length() - actual_size ) ; i++){
+	    for(j=0;j<52;j++) chars_copy[j] = chars[j];
+	    actual_size_temp=0;
+	    j=i;
+	    for( ; actual_size_temp!=actual_size && j<base.length() ; j++){
+            if(base[j]>='a' && base[j]<='z'){    
+                if(chars_copy[base[j]-'a'] == true){
+                    chars_copy[base[j]-'a'] = false;
+                    actual_size_temp++;
+                }
+            }
+	        else{
+                if(chars_copy[base[j]-'A'+26] == true){
+                    actual_size_temp++;
+                    chars_copy[base[j]-'A'+26] = false;
+                }
+	        }
+	    }
+        if((j-i)<min_size && actual_size_temp==actual_size){
+            min_size=(j-i);
+        }
+        if(min_size==actual_size) break;
+	}
+	cout<<min_size;
+	return 0;
+}
