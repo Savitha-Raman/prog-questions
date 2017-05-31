@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    string base;
+    short number_of_char=0,max_length=0,limit=0;
+    cin>>base>>limit;
+    bool chars[128]={},chars_copy[128]={};
+    for(short i=0 ; i<base.length() ; i++){
+        if(chars[base[i]]==false){
+           chars[base[i]]=true;
+        }
+    }
+    for(short i=0;i<base.length();i++){
+        for(short x=0 ; x<128 ; x++) chars_copy[x] = chars[x];
+        short j=i;
+        while(number_of_char<=limit && j<base.length()){
+            if(chars_copy[base[j]]==true){
+                chars_copy[base[j]]=false;
+                number_of_char++;
+            }
+            if(number_of_char==limit+1) break;
+            j++;
+        }
+        if((j-i)>max_length){
+            max_length = (j-i);
+            //cout<<i<<" "<<j<<endl;
+        }
+    }
+    cout<<max_length;
+    return 0;
+}
