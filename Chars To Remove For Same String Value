@@ -1,0 +1,37 @@
+Input:
+2
+bmanabgerb
+manasgsesr
+
+Output:
+bs
+
+Explanation:
+If the character b is removed from the first string, it becomes manager.
+If the character s is removed from the second string, it becomes manager.
+Hence bs is printed as output.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin>>n;
+    string a[n];
+    short ch[n][26]={};
+    for(int i=0;i<n;++i){
+        cin>>a[i];
+        for(int j=0;j<a[i].length();++j){
+            ++ch[i][a[i][j]-'a'];
+        }
+    }
+    for(int i=0;i<n;++i){
+        for(int j=0;j<26;++j){
+            if(ch[i][j]!=0 && ch[(i+1)%(n-1)][j]==0){
+                cout<<(char)(j+'a');
+                break;
+            }
+        }
+    }
+    return 0;
+}
